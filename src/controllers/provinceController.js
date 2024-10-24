@@ -18,8 +18,8 @@ const getAllProvince = async () => {
     if (!listProvinces || listProvinces.length === 0) throw new Error("No se encontraron las provincias");
 
     listProvinces.map(prov => {
-        if (prov.flag) prov.flag = getImage(prov.flag);
-        if (prov.shield) prov.shield = getImage(prov.shield);
+        if (prov.flag && prov.flag!='') prov.flag = getImage(prov.flag);
+        if (prov.shield && prov.shield!='') prov.shield = getImage(prov.shield);
     });
 
     return listProvinces;
@@ -39,6 +39,7 @@ const getProvince = async ({ name }) => {
     if (!province) throw new Error("No se encontro la provincia");
     if (province.flag) province.flag = await getImage(province.flag);
     if (province.shield) province.shield = await getImage(province.shield);
+    if (province.DepartmentEducation.photo) province.DepartmentEducation.photo = await getImage(province.DepartmentEducation.photo);
 
     return province;
 };

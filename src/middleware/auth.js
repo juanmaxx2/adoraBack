@@ -28,4 +28,13 @@ const isAdmin = (req, res, next) => {
     }
 };
 
-module.exports = { authenticateJWT, isAdmin };
+const isSuperAdmin = (req, res, next) => {
+    const { rol } = req.user;
+    if (rol === 'superadmin') {
+        next();
+    } else {
+        res.status(403).json({ message: 'Access denied. Super Admins only.' });
+    }
+};
+
+module.exports = { authenticateJWT, isAdmin, isSuperAdmin };

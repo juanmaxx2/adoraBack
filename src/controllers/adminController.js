@@ -124,7 +124,10 @@ const deleteUser = async ({ email }) => {
     const user = await User.findOne({
         where: { email, status: true }
     });
+
     if (!user) throw new Error('no se encontro el usuario.');
+
+    console.log(user)
 
     user.status = false;
     await user.save();

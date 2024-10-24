@@ -11,11 +11,11 @@ module.exports = (sequelize) => {
             },
             flag: {
                 type: STRING,
-                allowNull: false,
+                allowNull: true,
             },
             shield: {
                 type: STRING,
-                allowNull: false,
+                allowNull: true,
             },
             whatsapp: {
                 type: STRING,
