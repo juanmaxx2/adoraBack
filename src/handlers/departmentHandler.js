@@ -1,5 +1,5 @@
 //?-----------Imports-----------
-const { getDepartment, createDepartment, modifyDepartment, deleteDepartment, getAllDepartment } = require("../controllers/DepartmentController");
+const { getDepartment, createDepartment, modifyDepartment, deleteDepartment, getAllDepartment } = require("../controllers/departmentController");
 
 //*-----------GETALL-----------
 const getAllDepartmentHandler = async (req, res) => {
