@@ -2,13 +2,31 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const { POSTGRES_USERNAME, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, DATABASE_NAME } = process.env;
+const {
+   POSTGRES_USERNAME,
+   POSTGRES_PASSWORD,
+   POSTGRES_HOST,
+   POSTGRES_PORT,
+   DATABASE_NAME,
+   NODE_ENV, // Verifica si estás en producción
+} = process.env;
+
+const isProduction = NODE_ENV === 'production';
 
 const sequelize = new Sequelize(
    `postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${DATABASE_NAME}`,
    {
       logging: false, // set to console.log to see the raw SQL queries
       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+      dialect: 'postgres',
+      dialectOptions: {
+         ssl: isProduction
+            ? {
+                 require: true, // Habilita SSL
+                 rejectUnauthorized: false, // Ignora el certificado no autorizado
+              }
+            : false, // No usar SSL en desarrollo
+      },
    }
 );
 
@@ -54,5 +72,5 @@ Province.hasMany(ProvincialLaw);
 
 module.exports = {
    ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
+   conn: sequelize, // para importar la conexión { conn } = require('./db.js');
 };
